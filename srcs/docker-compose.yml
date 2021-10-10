@@ -1,0 +1,17 @@
+version: '3'
+services:
+    nginx:
+        build: ./requirements/nginx/
+        env_file:
+            - .env
+        ports:
+            - "443:443"
+    mysql:
+        build: ./requirements/mariadb
+        env_file:
+            - .env
+        ports:
+            - "3306:3306"
+        volumes:
+            - /Users/mymik/data/mysql:/var/lib/mysql
+    
