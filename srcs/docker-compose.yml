@@ -8,9 +8,8 @@ services:
             - "443:443"
         networks:
             - backend
-        links:
+        depends_on:
             - wordpress
-
         volumes:
             - wp-data:/www/wordpress
 
@@ -18,6 +17,8 @@ services:
         build: ./requirements/mariadb
         env_file:
             - .env
+        ports:
+            - "3306:3306"
         volumes:
             - db-data:/var/lib/mysql
 
@@ -25,6 +26,10 @@ services:
         build: ./requirements/wordpress
         env_file:
             - .env
+        ports:
+            - "9000:9000"
+        expose:
+            - 9000
         networks:
             - backend
         volumes:
@@ -49,4 +54,4 @@ volumes:
 
 networks:
     backend:
-        driver: bridge
+            #driver: bridge
