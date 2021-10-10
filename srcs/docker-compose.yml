@@ -6,14 +6,29 @@ services:
             - .env
         ports:
             - "443:443"
-    mysql:
+        networks:
+            - backend
+        links:
+            - wordpress
+
+        volumes:
+            - wp-data:/www/wordpress
+
+    mariadb:
         build: ./requirements/mariadb
         env_file:
             - .env
         volumes:
             - db-data:/var/lib/mysql
-        ports:
-            - "3306:3306"
+
+    wordpress:
+        build: ./requirements/wordpress
+        env_file:
+            - .env
+        networks:
+            - backend
+        volumes:
+            - wp-data:/www/wordpress
 
 volumes:
     db-data:
@@ -22,4 +37,16 @@ volumes:
             type: none
             device: "/home/mymik/data/db-data"
             o: bind
+    wp-data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/mymik/data/wp-data"
+            o: bind
+            #networks:
+            # backend:
+            #driver: bridge
 
+networks:
+    backend:
+        driver: bridge
