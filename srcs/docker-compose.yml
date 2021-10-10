@@ -11,42 +11,38 @@ services:
         depends_on:
             - wordpress
         volumes:
-            - wp-data:/www/wordpress
+            - mwp-data:/www/wordpress
 
     mariadb:
         build: ./requirements/mariadb
         env_file:
             - .env
-        ports:
-            - "3306:3306"
+        networks:
+            - backend
         volumes:
-            - db-data:/var/lib/mysql
+            - mdb-data:/var/lib/mysql
 
     wordpress:
         build: ./requirements/wordpress
         env_file:
             - .env
-        ports:
-            - "9000:9000"
-        expose:
-            - 9000
         networks:
             - backend
         volumes:
-            - wp-data:/www/wordpress
+            - mwp-data:/www/wordpress
 
 volumes:
-    db-data:
+    mdb-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/mymik/data/db-data"
+            device: "/home/m/data/db-data"
             o: bind
-    wp-data:
+    mwp-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/mymik/data/wp-data"
+            device: "/home/m/data/wp-data"
             o: bind
             #networks:
             # backend:
@@ -54,4 +50,4 @@ volumes:
 
 networks:
     backend:
-            #driver: bridge
+            driver: bridge
