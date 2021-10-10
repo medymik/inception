@@ -10,8 +10,16 @@ services:
         build: ./requirements/mariadb
         env_file:
             - .env
+        volumes:
+            - db-data:/var/lib/mysql
         ports:
             - "3306:3306"
-        volumes:
-            - /Users/mymik/data/mysql:/var/lib/mysql
-    
+
+volumes:
+    db-data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/mymik/data/db-data"
+            o: bind
+
