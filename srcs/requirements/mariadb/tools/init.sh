@@ -17,4 +17,4 @@ sed -i 's/skip-networking/# skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
 sed -i 's/#bind-address/bind-address/g' /etc/my.cnf.d/mariadb-server.cnf
 service mariadb start
 service mariadb stop
-/usr/bin/mariadbd --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mariadb/plugin --user=root --pid-file=/run/mysqld/mariadb.pid
+/usr/bin/mariadbd --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mariadb/plugin --user=root --pid-file=/run/mysqld/mariadb.pid --skip-innodb --default-storage-engine=myisam

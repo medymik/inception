@@ -42,6 +42,8 @@ services:
         build: ./requirements/bonus/ftp
         networks:
             - backend
+        volumes:
+            - mwp-data:/home/user
         ports:
             - "21:21"
             - "21000:21000"
@@ -57,13 +59,13 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: "/home/inception/data/db-data"
+            device: "/home/m/data/db-data"
             o: bind
     mwp-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/inception/data/wp-data"
+            device: "/home/m/data/wp-data"
             o: bind
             #networks:
             # backend:
