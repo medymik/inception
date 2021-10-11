@@ -47,6 +47,13 @@ services:
         ports:
             - "21:21"
             - "21000:21000"
+    
+    simple:
+        build: ./requirements/bonus/simple
+        env_file:
+            - .env
+        ports:
+            - "9999:9999"
 
     redis:
         build: ./requirements/bonus/redis
