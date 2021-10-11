@@ -31,18 +31,39 @@ services:
         volumes:
             - mwp-data:/www/wordpress
 
+    adminer:
+        build: ./requirements/bonus/adminer
+        networks:
+            - backend
+        ports:
+            - "5000:5000"
+    
+    ftp:
+        build: ./requirements/bonus/ftp
+        networks:
+            - backend
+        ports:
+            - "21:21"
+            - "21000:21000"
+
+    redis:
+        build: ./requirements/bonus/redis
+        networks:
+            - backend
+
+
 volumes:
     mdb-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/m/data/db-data"
+            device: "/home/inception/data/db-data"
             o: bind
     mwp-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/m/data/wp-data"
+            device: "/home/inception/data/wp-data"
             o: bind
             #networks:
             # backend:
