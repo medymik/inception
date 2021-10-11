@@ -60,6 +60,12 @@ services:
         networks:
             - backend
 
+    backup:
+        build: ./requirements/bonus/backup
+        volumes:
+            - mbackup:/backup
+            - mdb-data:/dbdata
+
 
 volumes:
     mdb-data:
@@ -74,9 +80,12 @@ volumes:
             type: none
             device: "/home/m/data/wp-data"
             o: bind
-            #networks:
-            # backend:
-            #driver: bridge
+    mbackup:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/m/data/backup"
+            o: bind
 
 networks:
     backend:
