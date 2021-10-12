@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine
 
 RUN apk add --no-cache mariadb mariadb-client
 RUN apk add openrc && openrc > /dev/null

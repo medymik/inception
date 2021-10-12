@@ -24,18 +24,9 @@ services:
         volumes:
             - mdb-data:/var/lib/mysql
 
-    # wordpress:
-    #     build: ./requirements/wordpress
-    #     env_file:
-    #         - .env
-    #     networks:
-    #         - backend
-    #     volumes:
-    #         - mwp-data:/www/wordpress
-
     wordpress:
         restart: unless-stopped
-        build: ./requirements/wp2
+        build: ./requirements/wordpress
         env_file:
             - .env
         networks:
@@ -91,19 +82,19 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: "/home/m/data/db-data"
+            device: "/home/mymik/data/db-data"
             o: bind
     mwp-data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/m/data/wp-data"
+            device: "/home/mymik/data/wp-data"
             o: bind
     mbackup:
         driver: local
         driver_opts:
             type: none
-            device: "/home/m/data/backup"
+            device: "/home/mymik/data/backup"
             o: bind
 
 networks:
