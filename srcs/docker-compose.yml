@@ -1,6 +1,8 @@
 version: '3'
 services:
     nginx:
+        depends_on:
+            - wordpress
         build: ./requirements/nginx/
         env_file:
             - .env
@@ -22,15 +24,26 @@ services:
         volumes:
             - mdb-data:/var/lib/mysql
 
+    # wordpress:
+    #     build: ./requirements/wordpress
+    #     env_file:
+    #         - .env
+    #     networks:
+    #         - backend
+    #     volumes:
+    #         - mwp-data:/www/wordpress
+
     wordpress:
-        build: ./requirements/wordpress
+        depends_on:
+            - mariadb
+        build: ./requirements/wp2
         env_file:
             - .env
         networks:
             - backend
         volumes:
             - mwp-data:/www/wordpress
-
+    
     adminer:
         build: ./requirements/bonus/adminer
         networks:
@@ -61,10 +74,11 @@ services:
             - backend
 
     backup:
+        depends_on:
+            - wordpress
         build: ./requirements/bonus/backup
         volumes:
-            - mbackup:/backup
-            - mdb-data:/dbdata
+            - mbackup:/backup 
 
 
 volumes:
