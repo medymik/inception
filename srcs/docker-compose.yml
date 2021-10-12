@@ -1,8 +1,7 @@
 version: '3'
 services:
     nginx:
-        depends_on:
-            - wordpress
+        restart: unless-stopped
         build: ./requirements/nginx/
         env_file:
             - .env
@@ -16,6 +15,7 @@ services:
             - mwp-data:/www/wordpress
 
     mariadb:
+        restart: unless-stopped
         build: ./requirements/mariadb
         env_file:
             - .env
@@ -34,8 +34,7 @@ services:
     #         - mwp-data:/www/wordpress
 
     wordpress:
-        depends_on:
-            - mariadb
+        restart: unless-stopped
         build: ./requirements/wp2
         env_file:
             - .env
@@ -46,6 +45,7 @@ services:
     
     adminer:
         build: ./requirements/bonus/adminer
+        restart: unless-stopped
         networks:
             - backend
         ports:
@@ -53,6 +53,7 @@ services:
     
     ftp:
         build: ./requirements/bonus/ftp
+        restart: unless-stopped
         env_file:
             - .env
         volumes:
@@ -63,6 +64,7 @@ services:
     
     simple:
         build: ./requirements/bonus/simple
+        restart: unless-stopped
         env_file:
             - .env
         ports:
@@ -70,15 +72,18 @@ services:
 
     redis:
         build: ./requirements/bonus/redis
+        restart: unless-stopped
         networks:
             - backend
 
     backup:
+        restart: unless-stopped
         depends_on:
             - wordpress
         build: ./requirements/bonus/backup
         volumes:
             - mbackup:/backup 
+            - mwp-data:/dbdata
 
 
 volumes:
