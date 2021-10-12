@@ -5,7 +5,8 @@ then
     # mysql --user=root < req.sql
     # mysql --user=root wordpress < wordpress.sql
 
-    echo "CREATE DATABASE wordpress;" | mysql -u root
+    mysql -u root < db.sql
+    #echo "CREATE DATABASE wordpress;" | mysql -u root
     echo "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" | mysql -u root
     echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%'; IDENTIFIED BY '${MYSQL_PASSWORD}'" | mysql -u root
     echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';" | mysql -u root

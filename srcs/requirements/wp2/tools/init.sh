@@ -1,6 +1,9 @@
 sed -i "s/__sql__user__/$MYSQL_USER/g" /wordpress/wp-config.php
-sed -i "s/__wp__pass__/$MYSQL_PASSWORD/g" /wordpress/wp-config.php
+sed -i "s/__sql__pass__/$MYSQL_PASSWORD/g" /wordpress/wp-config.php
 
-mkdir /www
-mv wordpress /www
+if [ ! -f "/www/wordpress/wp-config.php" ];
+then
+    cp -Rf /wordpress/* /www/wordpress
+fi
+
 php-fpm7 -F -R
